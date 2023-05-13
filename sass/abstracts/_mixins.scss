@@ -1,0 +1,59 @@
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// MEDIA QUERIES MANAGER
+/*
+0 - 600px       Phones
+600 - 900px     Tablet portrait
+900 - 1200px    Uses our Desktop first styles
+1800px +        Big desktops
+*/
+
+@mixin respond-phone {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+/*
+$breakpoint argument choices:
+- phone
+- tab-port
+- tab-land
+- (no need for desktops)
+- big-desktop
+
+PREFERED ORDER of implementing responsiveness: base + typography > general layouts + grid > page layout(page) > components 
+*/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      // For scalability according to font size. 1em = 16px. therefore: 600px = (600 / 16)em
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    }
+  }
+}
